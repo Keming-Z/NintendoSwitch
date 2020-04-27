@@ -1,0 +1,24 @@
+{
+  "name": "nintendo_switch",
+  "version": "1.0.0",
+  "description": "web scraping",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Keming-Z/NintendoSwitch.git"
+  },
+  "author": "Keming Zeng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Keming-Z/NintendoSwitch/issues"
+  },
+  "homepage": "https://github.com/Keming-Z/NintendoSwitch#readme",
+  "dependencies": {
+    "nodemailer": "^6.4.6",
+    "prompt": "^1.0.0",
+    "puppeteer": "^3.0.1"
+  }
+}
