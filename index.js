@@ -49,7 +49,7 @@ async function start() {
   const t0 = new Date().getTime();
   await page.goto(switchRednBlue, {
     timeout: 0,
-    waitUntil: "networkidle0",
+    waitUntil: "load",
   });
   const t1 = new Date().getTime();
   console.log(`Takes ${(t1 - t0)/1000} seconds to open bestbuy`);
@@ -64,11 +64,12 @@ async function start() {
   if (!isDisabled) {
     console.log('Nintendo switch might be available now!!');
     await email();
+  } else {
+    console.log('Nintendo switch is still not available...');
   }
 
-  // send email
-  console.log('Nintendo switch is still not available...');
-  await email();
+  // send email anyway
+  // await email();
 
   console.log('------------------------------', '\n');
 
@@ -77,7 +78,7 @@ async function start() {
   console.log('==============================');
 };
 
-async function email() {
+async function email(isTest = false) {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -87,17 +88,17 @@ async function email() {
   });
   
   var mailOptions = {
-    from: emailAddress,
-    to: emailAddress,
-    subject: 'Buy Switch Now!!',
+    from: 'izonekpopthings@gmail.com',
+    to: 'kemingzeng@gmail.com',
+    subject: isTest ? 'Sending test email...' : 'Buy Switch Now!!',
     text: 'check attachment',
     attachments: [{
       filename: 'switch.png',
       path: 'page.png',
     }],
   };
-  
-  return transporter.sendMail(mailOptions, function(error, info){
+  console.log('Sending email...');
+  return await transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log(error);
     } else {
@@ -131,11 +132,12 @@ function enterEmail() {
       name: 'period',
       message: 'check status every __ minute, min:0, max: 60',
       default: 30,
-    }], function (err, result) {
+    }], async (err, result) => {
       if (err) { return onErr(err); }
       emailAddress = result['email_address'];
       emailPassword = result['password'];
       period = result.period;
+      await email(true);
       resolve()
     });
     
